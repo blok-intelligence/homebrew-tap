@@ -7,14 +7,17 @@
 class Seldon < Formula
   desc "Generate QA baselines from any codebase and run them from your terminal"
   homepage "https://github.com/blok-intelligence/blok-sdk"
-  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.5.3.tgz"
-  sha256 "ce2c4113adc7a47793a7a339c18805134da7810970cf289c82e2e8b2beeef329"
+  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.5.4.tgz"
+  sha256 "4298ff53212a1ab19e96fe53e19f592d3796e0b8fe6dafa453ddacd674a4c117"
   license "MIT"
 
   depends_on "node"
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    # Run postinstall explicitly to copy the native binary into bin/seldon,
+    # in case npm skipped lifecycle scripts.
+    system "node", "#{libexec}/lib/node_modules/@seldonqa/cli/postinstall.cjs"
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
