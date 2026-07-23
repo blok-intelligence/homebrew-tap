@@ -25,7 +25,11 @@ class Seldon < Formula
     cli_dir = "#{libexec}/lib/node_modules/@seldonqa/cli"
     arch = Hardware::CPU.arm? ? "arm64" : "x64"
     platform = OS.mac? ? "darwin" : "linux"
-    system "npm", "install", "--prefix", cli_dir, "--no-save", "--no-audit", "--no-fund",
+    # Install as a GLOBAL package into the same prefix (not --prefix cli_dir): a plain install would
+    # re-resolve the stub's package.json and try to fetch its workspace-only devDependency @blok/sdk
+    # (unpublished → 404). The platform package has no deps, so a global install just drops the binary
+    # alongside the stub, where postinstall finds it by walking up node_modules.
+    system "npm", "install", "--global", "--prefix", libexec, "--no-audit", "--no-fund",
            "@seldonqa/cli-#{platform}-#{arch}@#{version}"
 
     # Copy the native binary over the bin/seldon launcher placeholder.
