@@ -1,14 +1,15 @@
 # Homebrew formula for the Seldon CLI.
 #
-# Published to the tap repo blok-intelligence/homebrew-tap by the release-cli CircleCI workflow,
-# which bumps `url` to the new npm tarball and recomputes `sha256`.
+# This is the TEMPLATE. The release-tap CircleCI job (scripts/update-homebrew-tap.sh) copies it to
+# blok-intelligence/homebrew-tap on every cli-v* tag, rewriting `url` to the new npm tarball and
+# recomputing `sha256`. The version pinned here is only a placeholder — CI overrides it.
 #
 #   brew install blok-intelligence/tap/seldon
 class Seldon < Formula
   desc "Generate QA baselines from any codebase and run them from your terminal"
   homepage "https://github.com/blok-intelligence/blok-sdk"
-  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.6.3.tgz"
-  sha256 "178058bb9c911cc9117f1cf51de4b0aa0244820f7d52b4df959d1d56dc1de262"
+  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.6.7.tgz"
+  sha256 "3e189fc818034f96869599c21b1182b28b3c7466a99283c1b6a1ad92bd314574"
   license "MIT"
 
   depends_on "node"
