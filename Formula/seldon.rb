@@ -16,9 +16,20 @@ class Seldon < Formula
 
   def install
     system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    # Run postinstall explicitly to copy the native binary into bin/seldon,
-    # in case npm skipped lifecycle scripts.
-    system "node", "#{libexec}/lib/node_modules/@seldonqa/cli/postinstall.cjs"
+
+    # Homebrew's std npm args add a supply-chain delay (--min-release-age) that refuses packages
+    # published in the last ~24h — which blocks the freshly-released native binary carried in
+    # optionalDependencies, so a brew install right after a release would fall back to the launcher.
+    # Install the matching first-party platform package directly (no delay, still an opaque native
+    # binary — no source exposed) so `brew install` gets the real binary immediately.
+    cli_dir = "#{libexec}/lib/node_modules/@seldonqa/cli"
+    arch = Hardware::CPU.arm? ? "arm64" : "x64"
+    platform = OS.mac? ? "darwin" : "linux"
+    system "npm", "install", "--prefix", cli_dir, "--no-save", "--no-audit", "--no-fund",
+           "@seldonqa/cli-#{platform}-#{arch}@#{version}"
+
+    # Copy the native binary over the bin/seldon launcher placeholder.
+    system "node", "#{cli_dir}/postinstall.cjs"
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
