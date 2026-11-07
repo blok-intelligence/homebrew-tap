@@ -8,8 +8,8 @@
 class Seldon < Formula
   desc "Generate QA baselines from any codebase and run them from your terminal"
   homepage "https://github.com/blok-intelligence/blok-sdk"
-  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.14.0.tgz"
-  sha256 "98f9ea910edf59cdbf08b5cc418505619e13d14b2adf2753c04478e18fef3c6e"
+  url "https://registry.npmjs.org/@seldonqa/cli/-/cli-0.14.1.tgz"
+  sha256 "b9580d91b30adca0a82f991c67a2d75a8f3a458063b91477fdfeb375d9bc618c"
   license "MIT"
 
   depends_on "node"
